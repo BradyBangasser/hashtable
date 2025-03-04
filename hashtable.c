@@ -136,20 +136,21 @@ void ht_print(ht *ht, ht_pprint _Nullable pprint) {
 #ifdef INTERNAL_HT_TEST
 uint64_t test_hash(const void *p) { return (uint64_t) p; }
 int main() {
-    uint32_t i;
+    uint64_t i, j;
     ht h;
 
     assert(!ht_init(&h, test_hash, ALLOC_EAGER));
-    ht_print(&h, NULL);
 
-    for (i = 0; i < 8; i++) {
-        assert(!ht_insert(&h, (void *) 1));
-        ht_print(&h, NULL);
+    for (i = 1; i < 100; i++) {
+        ht_insert(&h, (void *) i);
     }
 
-    for (i = 0; i < 6; i++) {
-        assert(ht_remove(&h, (void *) 1));
-        ht_print(&h, NULL);
+    while (h.n) {
+        j = rand() % 150;
+        
+        i = (uint64_t) ht_remove(&h, (void *) j);
+
+        if (i) printf("%lu\n", i);
     }
 
     assert(!ht_destroy(&h));
