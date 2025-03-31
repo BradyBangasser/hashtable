@@ -8,6 +8,9 @@ endif
 
 all: $(PWD)/libhashtable.a
 
+test: $(PWD)/hashtable.c
+	$(CC) -DINTERNAL_TEST -Og -g $< -o $@
+
 install: all
 	cp $(PWD)/libhashtable.a /usr/local/lib/libhashtable.a
 	cp $(PWD)/hashtable.h /usr/local/include/hashtable.h

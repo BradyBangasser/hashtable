@@ -42,7 +42,7 @@ static const char * _Nonnull ht_alloc_types[] = { ALLOCATION_TYPES(STR) };
 #undef ALLOCATION_TYPES
 
 typedef struct ht {
-    const ht_hfn _Nullable hfn;
+    ht_hfn _Nullable hfn;
     ht_bucket * _Nullable buckets;
     ht_allocation_type alloc_type;
 
