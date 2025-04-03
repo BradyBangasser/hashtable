@@ -1,4 +1,5 @@
 PWD:=$(shell pwd)
+INSTALL?=/usr/local
 
 ifdef DEBUG
 	FLAGS:=$(FLAGS) -g -Og
@@ -12,11 +13,13 @@ test: $(PWD)/hashtable.c
 	$(CC) -DINTERNAL_TEST -Og -g $< -o $@
 
 install: all
-	cp $(PWD)/libhashtable.a /usr/local/lib/libhashtable.a
-	cp $(PWD)/hashtable.h /usr/local/include/hashtable.h
+	mkdir -p $(INSTALL)/lib
+	mkdir -p $(INSTALL)/include
+	cp $(PWD)/libhashtable.a $(INSTALL)/lib/libhashtable.a
+	cp $(PWD)/hashtable.h $(INSTALL)/include/hashtable.h
 
 clean: 
-	rm -f $(PWD)/libhashtable.a $(PWD)/hashtable.c.o
+	rm -f $(PWD)/libhashtable.a $(PWD)/hashtable.c.o test
 
 $(PWD)/libhashtable.a: $(PWD)/hashtable.c.o
 	ar r $@ $^ > /dev/null
